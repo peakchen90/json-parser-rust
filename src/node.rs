@@ -53,13 +53,12 @@ impl Node {
     }
 
     pub fn create(node_type: NodeType, children: NodeChild, start: usize, end: usize) -> Node {
-        let node = Node {
+        Node {
             node_type,
             start,
             end,
-            children: Box::new(NodeChild::Null),
-        };
-        node
+            children: Box::new(children),
+        }
     }
 
     pub fn to_string(&self) -> String {

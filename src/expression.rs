@@ -93,7 +93,7 @@ impl Parser {
             NodeType::ArrayExpression,
             NodeChild::List(elements),
             start_pos,
-            self.current_token.end,
+            self.current_token.end
         );
         self.move_next();
         node

@@ -1,25 +1,25 @@
 use std::ops::Deref;
 use crate::node::{Node, NodeChild, NodeType};
 
-pub fn walk(node: &Node) {
-    println!("=================== {}", node.to_string());
+pub fn walk<T: Fn(&Node)>(node: &Node, cb: &T) {
     match &node.children.deref() {
         NodeChild::KV { key, value } => {
             // cb(node);
-            walk(key);
-            walk(value);
-        },
+            walk(key, &cb);
+            walk(value, &cb);
+        }
         NodeChild::List(list) => {
             // cb(node);
             for n in list {
-                walk(n);
+                walk(n, &cb);
             }
-        },
-        NodeChild::Value(_) => {
-            // cb(node);
-        },
+        }
+        NodeChild::Value(x) => {
+            cb(node);
+            println!("value: {}", x);
+        }
         NodeChild::Null => {
-            println!("Unknown node");
+            println!("Unexpected Error");
         }
     }
 }
