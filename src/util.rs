@@ -16,13 +16,17 @@ impl Position {
 
     pub fn from_pos(source_chars: &Vec<char>, pos: usize) -> Position {
         let mut position = Position { line: 1, column: 1 };
-        for &c in source_chars {
-            if c == '\n' {
+        let mut i = 0;
+        let len = source_chars.len();
+        while i < len && i < pos {
+            let ch = source_chars[i];
+            if ch == '\n' {
                 position.line = position.line + 1;
                 position.column = 1;
             } else {
                 position.column = position.column + 1;
             }
+            i = i + 1;
         }
         position
     }
@@ -34,6 +38,17 @@ pub fn is_number_char(code: usize) -> bool {
 
 pub fn is_word_char(code: usize) -> bool {
     (code >= 65 && code <= 90) || (code >= 97 && code <= 122) // A-Z or a-z
+}
+
+pub fn escape_str(source: &str, escaped_char: char) -> String {
+    let mut result = String::new();
+    for ch in source.chars() {
+        if ch == escaped_char {
+            result.push('\\');
+        }
+        result.push(ch);
+    }
+    result
 }
 
 impl Parser {

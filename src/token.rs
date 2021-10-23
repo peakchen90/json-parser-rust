@@ -33,7 +33,7 @@ pub struct Token {
 }
 
 impl Token {
-    pub fn new(token_type: TokenType) -> Token {
+    pub fn new(token_type: TokenType) -> Self {
         Token {
             token_type,
             value: String::from(""),
@@ -42,7 +42,7 @@ impl Token {
         }
     }
 
-    pub fn create(token_type: TokenType, value: &str, start: usize, end: usize) -> Token {
+    pub fn create(token_type: TokenType, value: &str, start: usize, end: usize) -> Self {
         Token {
             token_type,
             value: value.to_string(),

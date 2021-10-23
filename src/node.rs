@@ -1,4 +1,5 @@
 use std::fmt::Pointer;
+use std::ops::Deref;
 use crate::parser::Parser;
 use crate::token::TokenType;
 
@@ -43,7 +44,7 @@ pub struct Node {
 }
 
 impl Node {
-    pub fn new(node_type: NodeType) -> Node {
+    pub fn new(node_type: NodeType) -> Self {
         Node {
             node_type,
             start: 0,
@@ -52,12 +53,33 @@ impl Node {
         }
     }
 
-    pub fn create(node_type: NodeType, children: NodeChild, start: usize, end: usize) -> Node {
+    pub fn create(node_type: NodeType, children: NodeChild, start: usize, end: usize) -> Self {
         Node {
             node_type,
             start,
             end,
             children: Box::new(children),
+        }
+    }
+
+    pub fn get_children_as_value(&self) -> &String {
+        match self.children.deref() {
+            NodeChild::Value(x) => x,
+            _ => panic!("Invalid visit children of Node")
+        }
+    }
+
+    pub fn get_children_as_list(&self) -> &Vec<Node> {
+        match self.children.deref() {
+            NodeChild::List(x) => x,
+            _ => panic!("Invalid visit children of Node")
+        }
+    }
+
+    pub fn get_children_as_kv(&self) -> (&Node, &Node) {
+        match self.children.deref() {
+            NodeChild::KV { key, value } => (key, value),
+            _ => panic!("Invalid visit children of Node")
         }
     }
 
