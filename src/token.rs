@@ -86,12 +86,6 @@ impl Parser {
             token = self.read_token();
         }
         self.current_token = token;
-
-
-
-
-        // TODO debug
-        println!("{}", self.current_token.to_string());
     }
 
     pub fn read_token(&mut self) -> Token {

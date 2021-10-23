@@ -12,7 +12,7 @@ pub struct Parser {
 }
 
 impl Parser {
-    pub fn parse(input: &String) -> Node {
+    pub fn parse(input: &str) -> Node {
         let mut chars: Vec<char> = Vec::new();
         for i in input.chars() {
             chars.push(i);
@@ -35,7 +35,7 @@ impl Parser {
         let root_end = body.end;
         let node = Node::create(
             NodeType::Root,
-            NodeChild::Node(body),
+            NodeChild::List(vec![body]),
             root_start,
             root_end,
         );

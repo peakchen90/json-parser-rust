@@ -31,9 +31,8 @@ impl NodeType {
 pub enum NodeChild {
     KV { key: Node, value: Node },
     List(Vec<Node>),
-    Node(Node),
-    String(String),
-    Unknown,
+    Value(String),
+    Null,
 }
 
 pub struct Node {
@@ -49,7 +48,7 @@ impl Node {
             node_type,
             start: 0,
             end: 0,
-            children: Box::new(NodeChild::Unknown),
+            children: Box::new(NodeChild::Null),
         }
     }
 
@@ -58,12 +57,8 @@ impl Node {
             node_type,
             start,
             end,
-            children: Box::new(NodeChild::Unknown),
+            children: Box::new(NodeChild::Null),
         };
-
-        // TODO debug
-        println!("@@@ {}", node.to_string());
-
         node
     }
 
@@ -84,7 +79,7 @@ impl Parser {
             TokenType::String => {
                 let node = Node::create(
                     NodeType::StringLiteral,
-                    NodeChild::String(value),
+                    NodeChild::Value(value),
                     current_token.start,
                     current_token.end,
                 );
@@ -94,7 +89,7 @@ impl Parser {
             TokenType::Number => {
                 let node = Node::create(
                     NodeType::NumericLiteral,
-                    NodeChild::String(value),
+                    NodeChild::Value(value),
                     current_token.start,
                     current_token.end,
                 );
@@ -105,7 +100,7 @@ impl Parser {
                 if value.eq("null") {
                     let node = Node::create(
                         NodeType::NullLiteral,
-                        NodeChild::String(value),
+                        NodeChild::Value(value),
                         current_token.start,
                         current_token.end,
                     );
@@ -114,7 +109,7 @@ impl Parser {
                 } else if value.eq("true") || value.eq("false") {
                     let node = Node::create(
                         NodeType::BooleanLiteral,
-                        NodeChild::String(value),
+                        NodeChild::Value(value),
                         current_token.start,
                         current_token.end,
                     );

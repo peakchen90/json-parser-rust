@@ -19,7 +19,7 @@ impl Parser {
             self.expect(&TokenType::String);
             let key = Node::create(
                 NodeType::StringLiteral,
-                NodeChild::String(self.current_token.value.to_string()),
+                NodeChild::Value(self.current_token.value.to_string()),
                 self.current_token.start,
                 self.current_token.end,
             );
