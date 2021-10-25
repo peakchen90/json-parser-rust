@@ -1,8 +1,9 @@
 use std::fmt::{Display, Formatter};
+use std::rc::Rc;
 use crate::parser::Parser;
 use crate::util::*;
 
-#[derive(Eq, PartialEq, Copy, Clone)]
+#[derive(Eq, PartialEq)]
 pub enum TokenType {
     BracesStart,
     BracesEnd,
@@ -24,7 +25,6 @@ pub enum TokenTypeKind {
     Number,
 }
 
-// #[derive(Clone)]
 pub struct Token {
     pub token_type: TokenType,
     pub value: String,
@@ -56,21 +56,10 @@ impl Token {
     }
 }
 
-impl Clone for Token {
-    fn clone(&self) -> Self {
-        Token::create(
-            self.token_type,
-            &self.value.to_string(),
-            self.start,
-            self.end,
-        )
-    }
-}
-
 impl Parser {
     pub fn move_next(&mut self) {
         let token: Token;
-        self.last_token = self.current_token.clone();
+        self.last_token = Rc::clone(&self.current_token);
 
         let mut start_pos: i32 = -1;
         while self.is_valid_pos() && start_pos != (self.pos as i32) {
@@ -85,7 +74,7 @@ impl Parser {
         } else {
             token = self.read_token();
         }
-        self.current_token = token;
+        self.current_token = Rc::new(token);
     }
 
     pub fn read_token(&mut self) -> Token {

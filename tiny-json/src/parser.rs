@@ -1,3 +1,4 @@
+use std::rc::Rc;
 use crate::node::*;
 use crate::token::*;
 use crate::util::*;
@@ -7,8 +8,8 @@ pub struct Parser {
     pub chars: Vec<char>,
     pub length: usize,
     pub pos: usize,
-    pub current_token: Token,
-    pub last_token: Token,
+    pub current_token: Rc<Token>,
+    pub last_token: Rc<Token>,
 }
 
 impl Parser {
@@ -19,13 +20,14 @@ impl Parser {
         }
         let length = chars.len();
 
+        let first_token = Rc::new(Token::new(TokenType::StartF));
         let mut parser = Parser {
             input: input.to_string(),
             chars,
             length,
             pos: 0,
-            current_token: Token::new(TokenType::StartF),
-            last_token: Token::new(TokenType::StartF),
+            current_token: Rc::clone(&first_token),
+            last_token: Rc::clone(&first_token),
         };
 
         parser.move_next();
