@@ -95,7 +95,6 @@ impl Parser {
         } else {
             token = self.read_token();
         }
-        println!("{}", token);
         self.current_token = Rc::new(token);
     }
 

@@ -13,10 +13,7 @@ pub struct Parser {
 
 impl Parser {
     pub fn parse(input: &str) -> Node {
-        let mut chars: Vec<char> = Vec::new();
-        for i in input.chars() {
-            chars.push(i);
-        }
+        let chars: Vec<char> = input.chars().collect();
         let length = chars.len();
 
         let first_token = Rc::new(Token::new(TokenType::StartF));

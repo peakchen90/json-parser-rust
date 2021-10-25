@@ -20,13 +20,8 @@ fn format_json(filename: &str, indent: u32) {
 
 pub fn json_commander() {
     let mut i = 0;
-    let mut args: Vec<String> = vec![];
-    for x in env::args() {
-        if i >= 1 {
-            args.push(x);
-        }
-        i += 1;
-    }
+    let args: Vec<String> = env::args().collect();
+    let args = &args[1..];
 
     if args.len() == 0 {
         return print_help_info();
