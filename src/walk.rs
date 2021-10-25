@@ -1,7 +1,7 @@
 use std::ops::Deref;
 use crate::node::{Node, NodeChild, NodeType};
 
-pub fn walk<T: Fn(&Node)>(node: &Node, cb: &T) {
+pub fn walk(node: &Node, cb: fn(&Node)) {
     match node.children.deref() {
         NodeChild::KV { key, value } => {
             cb(node);

@@ -99,27 +99,28 @@ impl Parser {
         let start_pos = self.pos;
         match code {
             123 => { // '{'
-                self.inc_pos(1);
+                self.pos += 1;
+                self.pos += 1;
                 Token::create(TokenType::BracesStart, "{", start_pos, self.pos)
             }
             125 => { // '}'
-                self.inc_pos(1);
+                self.pos += 1;
                 Token::create(TokenType::BracesEnd, "}", start_pos, self.pos)
             }
             91 => { // '['
-                self.inc_pos(1);
+                self.pos += 1;
                 Token::create(TokenType::BracketsStart, "[", start_pos, self.pos)
             }
             93 => { // ']'
-                self.inc_pos(1);
+                self.pos += 1;
                 Token::create(TokenType::BracketsEnd, "]", start_pos, self.pos)
             }
             58 => { // ':'
-                self.inc_pos(1);
+                self.pos += 1;
                 Token::create(TokenType::Separator, ":", start_pos, self.pos)
             }
             44 => { // ','
-                self.inc_pos(1);
+                self.pos += 1;
                 Token::create(TokenType::Comma, ",", start_pos, self.pos)
             }
             34 => { // '"'
@@ -132,7 +133,7 @@ impl Parser {
     pub fn read_string_token(&mut self) -> Token {
         let mut token = Token::new(TokenType::String);
         token.start = self.pos;
-        self.inc_pos(1);
+        self.pos += 1;
 
         let mut chunk_start = self.pos;
         let mut code: usize = 0;
@@ -142,7 +143,7 @@ impl Parser {
         while self.is_valid_pos() {
             if is_escape_char {
                 is_escape_char = false;
-                self.inc_pos(1);
+                self.pos += 1;
                 continue;
             }
 
@@ -153,10 +154,10 @@ impl Parser {
             if code == 92 { // '\': escape
                 is_escape_char = true;
                 value.push_str(&self.slice_str(chunk_start, self.pos));
-                self.inc_pos(1);
+                self.pos += 1;
                 chunk_start = self.pos;
             } else {
-                self.inc_pos(1);
+                self.pos += 1;
             }
         }
 
@@ -164,8 +165,8 @@ impl Parser {
             self.unexpected_token_type_kind(&TokenTypeKind::String, self.pos);
         }
 
-        let value = &self.slice_str(chunk_start, self.pos);
-        self.inc_pos(1);
+        value.push_str(&self.slice_str(chunk_start, self.pos));
+        self.pos += 1;
 
         token.value = value.to_string();
         token.end = self.pos;
@@ -181,7 +182,7 @@ impl Parser {
         let mut code = self.get_current_code();
 
         if code == 45 { // '-'
-            self.inc_pos(1);
+            self.pos += 1;
         }
 
         while self.is_valid_pos() {
@@ -194,21 +195,21 @@ impl Parser {
                     allow_e = true;
                 }
                 expect_a_number = false;
-                self.inc_pos(1);
+                self.pos += 1;
             } else if expect_a_number {
                 break;
             } else if allow_e && (code == 69 || code == 101) { // 'E' or 'e'
                 allow_e = false;
                 allow_dot = false;
                 expect_a_number = true;
-                self.inc_pos(1);
+                self.pos += 1;
                 if self.is_valid_pos() && (self.get_current_code() == 43 || self.get_current_code() == 45) { // '+' or '-'
-                    self.inc_pos(1);
+                    self.pos += 1;
                 }
             } else if allow_dot && code == 46 { // '.'
                 allow_dot = false;
                 expect_a_number = true;
-                self.inc_pos(1);
+                self.pos += 1;
             } else {
                 break;
             }
@@ -226,7 +227,7 @@ impl Parser {
     pub fn read_word_token(&mut self) -> Token {
         let chunk_start = self.pos;
         while self.is_valid_pos() && is_word_char(self.get_code_at(self.pos)) {
-            self.inc_pos(1);
+            self.pos += 1;
         }
         let value = &self.slice_str(chunk_start, self.pos);
         Token::create(TokenType::Word, value, chunk_start, self.pos)

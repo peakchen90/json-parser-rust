@@ -66,10 +66,6 @@ impl Parser {
         self.get_code_at(self.pos)
     }
 
-    pub fn inc_pos(&mut self, num: usize) {
-        self.pos = self.pos + num;
-    }
-
     pub fn slice_str(&mut self, start: usize, end: usize) -> String {
         let mut str = String::new();
         for &i in &self.chars[start..end] {
@@ -82,14 +78,14 @@ impl Parser {
         while self.is_valid_pos() {
             let code = self.get_current_code();
             if code == 32 || code == 160 { // ` `
-                self.inc_pos(1);
+                self.pos += 1;
             } else if code == 13 || code == 10 || code == 8232 || code == 8233 { // new line
                 if code == 13 && self.get_code_at(self.pos + 1) == 10 { // CRLF
-                    self.inc_pos(1);
+                    self.pos += 1;
                 }
-                self.inc_pos(1);
+                self.pos += 1;
             } else if code > 8 && code < 14 { // 制表符等
-                self.inc_pos(1);
+                self.pos += 1;
             } else {
                 break;
             }
@@ -100,12 +96,12 @@ impl Parser {
         let mut code = self.get_current_code();
 
         if code == 47 && self.get_code_at(self.pos + 1) == 47 { // `//`
-            self.inc_pos(1);
+            self.pos += 1;
             while self.is_valid_pos() {
-                self.inc_pos(1);
+                self.pos += 1;
                 code = self.get_current_code();
                 if code == 10 { // '\n'
-                    self.inc_pos(1);
+                    self.pos += 1;
                     break;
                 }
             }
@@ -115,12 +111,12 @@ impl Parser {
     pub fn skip_block_comment(&mut self) {
         let code = self.get_current_code();
         if code == 47 && self.get_code_at(self.pos + 1) == 42 { // '/*'
-            self.inc_pos(1);
+            self.pos += 1;
             while self.is_valid_pos() {
-                self.inc_pos(1);
+                self.pos += 1;
                 self.get_current_code();
                 if code == 42 && self.get_code_at(self.pos + 1) == 47 { // '*/'
-                    self.inc_pos(2);
+                    self.pos += 2;
                     break;
                 }
             }
