@@ -35,9 +35,10 @@ pub fn json_commander() {
     let mut args = args.iter();
     let op = args.next().unwrap();
     if op == "-f" {
-        let indent: u32 = args.next().unwrap().parse().expect("The argument indent should be a number");
+        let indent = args.next().unwrap().parse::<i32>().expect("The argument indent should be a number");
+        assert!(indent > 0, "The indent should greater than 0");
         let filename = args.next().expect("Missing argument filename");
-        format_json(filename, indent);
+        format_json(filename, indent as u32);
     } else if op == "-m" {
         let filename = args.next().expect("Missing argument filename");
         format_json(filename, 0);
