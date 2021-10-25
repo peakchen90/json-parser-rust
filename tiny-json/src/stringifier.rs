@@ -1,7 +1,5 @@
-use std::ops::Deref;
 use crate::node::*;
 use crate::util::*;
-use crate::walk::walk;
 
 pub struct Stringifier {
     config_indent: u32,
@@ -43,10 +41,8 @@ impl Stringifier {
             }
             NodeType::ObjectProperty => {
                 let (key, value) = node.get_children_as_kv();
-                ;
                 let key_str = &self.stringify(key);
                 let value_str = &self.stringify(value);
-                let mut str = key_str;
                 format!(
                     "{}{}{}",
                     key_str,
@@ -58,7 +54,6 @@ impl Stringifier {
                 let mut str = String::from("[");
                 self.push_indent();
                 let elements = node.get_children_as_list();
-                ;
                 let length = elements.len() as u32;
                 let mut i = 0;
                 for p in elements {

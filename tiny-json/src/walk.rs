@@ -1,5 +1,5 @@
 use std::ops::Deref;
-use crate::node::{Node, NodeChild, NodeType};
+use crate::node::{Node, NodeChild};
 
 /// 遍历节点
 pub fn walk(node: &Node, cb: fn(&Node)) {
@@ -15,7 +15,7 @@ pub fn walk(node: &Node, cb: fn(&Node)) {
                 walk(n, cb);
             }
         }
-        NodeChild::Value(x) => {
+        NodeChild::Value(_) => {
             cb(node);
         }
         NodeChild::Null => {

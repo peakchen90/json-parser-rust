@@ -7,6 +7,7 @@ pub struct Position {
 }
 
 impl Position {
+    #[allow(dead_code)]
     pub fn new(line: usize, column: usize) -> Position {
         Position {
             line,
@@ -130,7 +131,7 @@ impl Parser {
     }
 
     pub fn unexpected_token(&self, token: &Token) -> ! {
-        let mut msg = String::new();
+        let msg: String;
         if token.token_type == TokenType::EndF {
             msg = String::from("Uncaught SyntaxError: Unexpected end of JSON input");
         } else {
@@ -143,7 +144,7 @@ impl Parser {
                 position.column,
             );
         }
-        panic!(msg);
+        panic!("{}", msg);
     }
 
     pub fn unexpected_pos(&self, pos: usize) -> ! {
@@ -160,7 +161,7 @@ impl Parser {
             position.line,
             position.column,
         );
-        panic!(msg);
+        panic!("{}", msg);
     }
 
     pub fn unexpected_token_type_kind(&self, kind: &TokenTypeKind, pos: usize) -> ! {
@@ -176,7 +177,7 @@ impl Parser {
             position.line,
             position.column,
         );
-        panic!(msg);
+        panic!("{}", msg);
     }
 }
 

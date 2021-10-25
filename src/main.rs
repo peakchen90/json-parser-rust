@@ -13,6 +13,6 @@ fn main() {
     let result = json::stringify(&node, 4);
     println!("STRINGIFY:\n{}", result);
 
-    // println!("\n=============================== CLI ======================================\n");
-    // json-cli::json_commander();
+    println!("\n=============================== CLI ======================================\n");
+    json_cli::json_commander();
 }

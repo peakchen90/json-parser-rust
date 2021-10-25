@@ -1,4 +1,3 @@
-use std::fmt::Pointer;
 use std::ops::Deref;
 use crate::parser::Parser;
 use crate::token::TokenType;

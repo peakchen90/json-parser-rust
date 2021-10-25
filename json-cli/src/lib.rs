@@ -1,6 +1,5 @@
 use std::env;
 use std::fs;
-use std::ops::Deref;
 use tiny_json as json;
 
 fn print_help_info() {
@@ -34,7 +33,7 @@ pub fn json_commander() {
     }
 
     let mut args = args.iter();
-    let mut op = args.next().unwrap();
+    let op = args.next().unwrap();
     if op == "-f" {
         let indent: u32 = args.next().unwrap().parse().expect("The argument indent should be a number");
         let filename = args.next().expect("Missing argument filename");
