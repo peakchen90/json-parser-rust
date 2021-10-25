@@ -24,15 +24,13 @@ impl Stringifier {
                 let mut str = String::from("{");
                 self.push_indent();
                 let properties = node.get_children_as_list();
-                let length = properties.len() as u32;
-                let mut i = 0;
-                for p in properties {
+                let length = properties.len();
+                for (i, p) in properties.iter().enumerate() {
                     str.push_str(&self.get_indent_str());
                     str.push_str(&self.stringify(p));
                     if i < length - 1 {
                         str.push(',');
                     }
-                    i = i + 1;
                 }
                 self.pop_indent();
                 str.push_str(&self.get_indent_str());
@@ -54,15 +52,13 @@ impl Stringifier {
                 let mut str = String::from("[");
                 self.push_indent();
                 let elements = node.get_children_as_list();
-                let length = elements.len() as u32;
-                let mut i = 0;
-                for p in elements {
+                let length = elements.len();
+                for (i , p) in elements.iter().enumerate() {
                     str.push_str(&self.get_indent_str());
                     str.push_str(&self.stringify(p));
                     if i < length - 1 {
                         str.push(',');
                     }
-                    i = i + 1;
                 }
                 self.pop_indent();
                 str.push_str(&self.get_indent_str());

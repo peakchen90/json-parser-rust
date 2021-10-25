@@ -11,7 +11,7 @@ pub fn walk(node: &Node, cb: fn(&Node)) {
         }
         NodeChild::List(list) => {
             cb(node);
-            for n in list {
+            for n in list.iter() {
                 walk(n, cb);
             }
         }

@@ -197,7 +197,7 @@ impl Parser {
 
         while self.is_valid_pos() {
             code = self.get_current_code();
-            count = count + 1;
+            count += 1;
 
             if is_number_char(code) {
                 if count == 1 {
