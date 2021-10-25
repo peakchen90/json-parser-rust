@@ -7,7 +7,7 @@ fn main() {
     let node = json::parse(content.as_str());
 
     json::walk(&node, |current| {
-        println!("{}", current.to_string());
+        println!("{}", current);
     });
 
     let result = json::stringify(&node, 4);

@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::ops::Deref;
 use crate::parser::Parser;
 use crate::token::TokenType;
@@ -13,18 +14,18 @@ pub enum NodeType {
     NullLiteral,
 }
 
-impl NodeType {
-    pub fn to_string(&self) -> String {
-        match self {
-            NodeType::Root => "Root".to_string(),
-            NodeType::ObjectExpression => "ObjectExpression".to_string(),
-            NodeType::ObjectProperty => "ObjectProperty".to_string(),
-            NodeType::ArrayExpression => "ArrayExpression".to_string(),
-            NodeType::StringLiteral => "StringLiteral".to_string(),
-            NodeType::NumericLiteral => "NumericLiteral".to_string(),
-            NodeType::BooleanLiteral => "BooleanLiteral".to_string(),
-            NodeType::NullLiteral => "NullLiteral".to_string(),
-        }
+impl Display for NodeType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            NodeType::Root => String::from("Root"),
+            NodeType::ObjectExpression => String::from("ObjectExpression"),
+            NodeType::ObjectProperty => String::from("ObjectProperty"),
+            NodeType::ArrayExpression => String::from("ArrayExpression"),
+            NodeType::StringLiteral => String::from("StringLiteral"),
+            NodeType::NumericLiteral => String::from("NumericLiteral"),
+            NodeType::BooleanLiteral => String::from("BooleanLiteral"),
+            NodeType::NullLiteral => String::from("NullLiteral"),
+        })
     }
 }
 
@@ -81,15 +82,17 @@ impl Node {
             _ => panic!("Invalid visit children of Node")
         }
     }
+}
 
-    pub fn to_string(&self) -> String {
-        format!("Node:{} ({}, {})", self.node_type.to_string(), self.start, self.end)
+impl Display for Node {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Node::{} ({}, {})", self.node_type, self.start, self.end)
     }
 }
 
 impl Parser {
     pub fn parse_node(&mut self) -> Node {
-        let current_token = &self.current_token;
+        let current_token = self.current_token.deref();
         let start_pos = current_token.start;
         let value = current_token.value.to_string();
 

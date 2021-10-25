@@ -30,10 +30,11 @@ impl Parser {
 
             // value
             self.move_next();
+            let value = self.parse_node();
             properties.push(
                 Node::create(
                     NodeType::ObjectProperty,
-                    NodeChild::KV { key, value: self.parse_node() },
+                    NodeChild::KV { key, value },
                     property_start,
                     self.last_token.end,
                 )
@@ -93,7 +94,7 @@ impl Parser {
             NodeType::ArrayExpression,
             NodeChild::List(elements),
             start_pos,
-            self.current_token.end
+            self.current_token.end,
         );
         self.move_next();
         node

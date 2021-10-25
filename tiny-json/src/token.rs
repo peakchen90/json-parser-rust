@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::rc::Rc;
 use crate::parser::Parser;
 use crate::util::*;
@@ -16,6 +17,25 @@ pub enum TokenType {
     StartF,
     EndF,
     Unknown,
+}
+
+impl Display for TokenType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", match self {
+            TokenType::BracesStart => String::from("BracesStart"),
+            TokenType::BracesEnd => String::from("BracesEnd"),
+            TokenType::BracketsStart => String::from("BracketsStart"),
+            TokenType::BracketsEnd => String::from("BracketsEnd"),
+            TokenType::Separator => String::from("Separator"),
+            TokenType::Comma => String::from("Comma"),
+            TokenType::String => String::from("String"),
+            TokenType::Number => String::from("Number"),
+            TokenType::Word => String::from("Word"),
+            TokenType::StartF => String::from("StartF"),
+            TokenType::EndF => String::from("EndF"),
+            TokenType::Unknown => String::from("Unknown"),
+        })
+    }
 }
 
 #[derive(Eq, PartialEq)]
@@ -49,9 +69,11 @@ impl Token {
             end,
         }
     }
+}
 
-    pub fn to_string(&self) -> String {
-        format!("Token[{}] ({}, {})", self.value, self.start, self.end)
+impl Display for Token {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Token::{}({}) ({}, {})", self.token_type, self.value, self.start, self.end)
     }
 }
 
@@ -73,6 +95,7 @@ impl Parser {
         } else {
             token = self.read_token();
         }
+        println!("{}", token);
         self.current_token = Rc::new(token);
     }
 
