@@ -1,3 +1,7 @@
-  {
-  "ab\"cd": [1,false, null]
-  }
+{
+  "ab\"cd": [
+    1,
+    false,
+    null
+  ]
+}

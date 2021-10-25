@@ -2,11 +2,19 @@
 # It is not intended for manual editing.
 [[package]]
 name = "json"
-version = "0.1.0"
+version = "0.0.1"
 
 [[package]]
 name = "json-parser-rust"
 version = "0.1.0"
+dependencies = [
+ "json",
+ "json_cli",
+]
+
+[[package]]
+name = "json_cli"
+version = "0.0.1"
 dependencies = [
  "json",
 ]

@@ -118,7 +118,7 @@ impl Parser {
                 node
             }
             TokenType::Word => {
-                if value.eq("null") {
+                if value == "null" {
                     let node = Node::create(
                         NodeType::NullLiteral,
                         NodeChild::Value(value),
@@ -127,7 +127,7 @@ impl Parser {
                     );
                     self.move_next();
                     node
-                } else if value.eq("true") || value.eq("false") {
+                } else if value == "true" || value == "false" {
                     let node = Node::create(
                         NodeType::BooleanLiteral,
                         NodeChild::Value(value),
