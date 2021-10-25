@@ -100,7 +100,6 @@ impl Parser {
         match code {
             123 => { // '{'
                 self.pos += 1;
-                self.pos += 1;
                 Token::create(TokenType::BracesStart, "{", start_pos, self.pos)
             }
             125 => { // '}'

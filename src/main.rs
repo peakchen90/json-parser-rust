@@ -9,9 +9,9 @@ fn main() {
         println!("{}", current.to_string());
     });
 
-    let result = json::stringify(&node, 5);
+    let result = json::stringify(&node, 4);
     println!("STRINGIFY:\n{}", result);
 
-    println!("\n=============================== CLI ======================================\n");
-    json_cli::json_commander();
+    // println!("\n=============================== CLI ======================================\n");
+    // json_cli::json_commander();
 }
