@@ -1,5 +1,6 @@
 use std::fs;
-use json::json;
+use json;
+mod cli;
 
 fn main() {
     println!("\n=============================== OUTPUT ======================================\n");
