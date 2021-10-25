@@ -1,26 +1,15 @@
 use std::fs;
-use std::ops::Deref;
-use crate::parser::Parser;
-use crate::stringifier::Stringifier;
-
-mod node;
-mod token;
-mod util;
-mod parser;
-mod expression;
-mod walk;
-mod stringifier;
+use json::json;
 
 fn main() {
     println!("\n=============================== OUTPUT ======================================\n");
     let content = fs::read_to_string("test.txt").unwrap();
-    let node = Parser::parse(content.as_str());
+    let node = json::parse(content.as_str());
 
-    // walk::walk(&node, |current| {
+    // json::walk(&node, |current| {
     //     println!("{}", current.to_string());
     // });
 
-    let mut stringifier = Stringifier::new(2);
-    let result = stringifier.stringify(&node);
+    let result = json::stringify(&node, 5);
     println!("STRINGIFY:\n{}", result);
 }

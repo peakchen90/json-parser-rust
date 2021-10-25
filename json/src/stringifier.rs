@@ -82,7 +82,7 @@ impl Stringifier {
     }
 
     fn push_indent(&mut self) -> u32 {
-        self.current = self.current + self.config_indent;
+        self.current += self.config_indent;
         self.current
     }
 

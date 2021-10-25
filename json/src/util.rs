@@ -21,12 +21,12 @@ impl Position {
         while i < len && i < pos {
             let ch = source_chars[i];
             if ch == '\n' {
-                position.line = position.line + 1;
+                position.line += 1;
                 position.column = 1;
             } else {
-                position.column = position.column + 1;
+                position.column += 1;
             }
-            i = i + 1;
+            i += 1;
         }
         position
     }

@@ -1,13 +1,9 @@
 [package]
-name = "json-parser-rust"
+name = "json"
 version = "0.1.0"
 authors = ["peakchen90 <1558267774@qq.com>"]
 edition = "2018"
 
-[profile.release]
-panic = "abort"
-
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-json = { path = "./json" }

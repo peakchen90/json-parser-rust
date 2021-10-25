@@ -3,10 +3,3 @@
 [[package]]
 name = "json"
 version = "0.1.0"
-
-[[package]]
-name = "json-parser-rust"
-version = "0.1.0"
-dependencies = [
- "json",
-]
