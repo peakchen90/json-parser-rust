@@ -1,6 +1,7 @@
 use std::ops::Deref;
 use crate::node::{Node, NodeChild, NodeType};
 
+/// 遍历节点
 pub fn walk(node: &Node, cb: fn(&Node)) {
     match node.children.deref() {
         NodeChild::KV { key, value } => {

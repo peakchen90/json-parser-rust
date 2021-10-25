@@ -1,10 +1,12 @@
 [package]
-name = "json_cli"
+name = "tiny-json"
 version = "0.0.1"
 authors = ["peakchen90 <1558267774@qq.com>"]
 edition = "2018"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/peakchen90/json-parser-rust"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-json = { path = "../json" }

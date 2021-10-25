@@ -10,5 +10,5 @@ panic = "abort"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-json = { path = "./json" }
-json_cli = { path = "./json_cli" }
+tiny-json = { path = "./tiny-json" }
+json-cli = { path = "./json-cli" }

@@ -1,13 +1,14 @@
 use std::env;
 use std::fs;
 use std::ops::Deref;
+use tiny_json as json;
 
 fn print_help_info() {
-    println!("Usage: json <options> filename");
-    println!("example: json -f a.json\n");
+    println!("Usage: tiny-json <options> filename");
+    println!("example: tiny-json -f a.tiny-json\n");
     println!("Options");
-    println!("    -f [indent]   format json file");
-    println!("    -m            minify json file\n");
+    println!("    -f [indent]   format tiny-json file");
+    println!("    -m            minify tiny-json file\n");
 }
 
 fn format_json(filename: &str, indent: u32) {

@@ -1,4 +1,5 @@
 use std::fs;
+use tiny_json as json;
 
 fn main() {
     println!("\n=============================== OUTPUT ======================================\n");
@@ -13,5 +14,5 @@ fn main() {
     println!("STRINGIFY:\n{}", result);
 
     // println!("\n=============================== CLI ======================================\n");
-    // json_cli::json_commander();
+    // json-cli::json_commander();
 }
