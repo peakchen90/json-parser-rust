@@ -35,11 +35,11 @@ pub fn json_commander() {
     let mut args = args.iter();
     let mut op = args.next().unwrap();
     if op == "-f" {
-        let indent: u32 = args.next().unwrap().parse().expect("The indent parameter should be a number");
-        let filename = args.next().expect("Missing filename parameter");
+        let indent: u32 = args.next().unwrap().parse().expect("The argument indent should be a number");
+        let filename = args.next().expect("Missing argument filename");
         format_json(filename, indent);
     } else if op == "-m" {
-        let filename = args.next().expect("Missing filename parameter");
+        let filename = args.next().expect("Missing argument filename");
         format_json(filename, 0);
     } else {
         print_help_info();
