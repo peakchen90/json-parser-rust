@@ -1,5 +1,6 @@
 use std::env;
 use std::fs;
+use std::time::Instant;
 use tiny_json as json;
 
 fn print_help_info() {
@@ -11,11 +12,13 @@ fn print_help_info() {
 }
 
 fn format_json(filename: &str, indent: u32) {
+    let start = Instant::now();
     let content = fs::read_to_string(filename)
         .expect(&format!("{}{}", "Read file error at:", filename));
     let node = json::parse(&content);
     let format_content = json::stringify(&node, indent);
     fs::write(filename, &format_content).expect("Write File Error");
+    println!("Complete! Cost: {:?}", start.elapsed());
 }
 
 pub fn json_commander() {
